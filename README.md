@@ -171,15 +171,15 @@ Launch **Subspace for Teams** — a thin product layer on top of the existing gr
 
 While exploring the web app in DevTools, I noticed every user interaction fires a `POST /graphql` request. I wrote a 25-line Node.js script with a simple `for` loop and fired 100 identical GraphQL queries in under a minute. Every single request returned **HTTP 200**. No throttling. No 429. No CAPTCHA. No ban.
 
-![Homepage showing GraphQL requests firing with no rate limiting](screenshots/homepage_no_ratelimit_graphql.png)
+![Homepage showing GraphQL requests firing with no rate limiting](homepage_no_ratelimit_graphql.png)
 
 *Above: The homepage and DevTools network tab showing repeated GraphQL requests being accepted without any rate-limiting response.*
 
-![DevTools network panel with many GraphQL requests](screenshots/graphql_requests_spam.png)
+![DevTools network panel with many GraphQL requests](graphql_requests_spam.png)
 
 *Above: DevTools showing a flood of identical GraphQL requests — all returning 200 OK within a single session, with no throttling applied.*
 
-![Rate limit exploit code and terminal output](screenshots/ratelimit_exploit_code_terminal.png)
+![Rate limit exploit code and terminal output](ratelimit_exploit_code_terminal.png)
 
 *Above: The Node.js script (`something.js`) that called the address suggestions API 100 times in a loop, and the terminal showing every call returning a full 200 response with no errors or rate-limit headers.*
 
@@ -225,7 +225,7 @@ Three layers, in order of implementation speed:
 
 I called `https://subspace.money/api/getAddressSuggestions` directly from my local machine via Postman. The request succeeded with a full 200 response and a structured JSON payload containing display names, formatted addresses, and lat/lng coordinates. The response headers contain no `Access-Control-Allow-Origin` restriction to `subspace.money` — any origin is accepted.
 
-![Postman call to address API from localhost succeeding](screenshots/cors_postman_address_api.png)
+![Postman call to address API from localhost succeeding](cors_postman_address_api.png)
 
 *Above: Postman running on localhost, calling the Subspace address suggestions API directly — no auth header, no origin check — and receiving a full 200 response with structured place data including coordinates.*
 
@@ -261,7 +261,7 @@ Three distinct bugs observed in the same session:
 
 The "Enter Verification Code" modal is left-aligned on a wide viewport. The OTP input section title sits flush-left while the modal itself is centered — visually abrupt and jarring. On a wide screen the left and right padding becomes excessively wide, stretching the UI and creating an uncomfortable reading span for the user.
 
-![OTP modal with left-aligned title and excessive side padding](screenshots/otp_layout_misalignment.png)
+![OTP modal with left-aligned title and excessive side padding](otp_layout_misalignment.png)
 
 *Above: The OTP verification modal on web. The title "Enter Verification Code" is left-aligned inside a centered modal, and the extreme side whitespace makes the entire screen feel stretched and unfinished.*
 
@@ -271,7 +271,7 @@ The "Enter Verification Code" modal is left-aligned on a wide viewport. The OTP 
 
 I added 4 items to the cart and then removed one. The cart count badge in the top navigation bar continued to show the old count — it did not decrement. The cart page itself showed the correct 3-item count, but the nav badge was stale. This is a classic Redux store / derived-state sync failure — the badge is likely reading from a selector that is not subscribed to the correct slice of state.
 
-![Cart showing 3 items but nav badge still showing 4](screenshots/cart_badge_stale_state.png)
+![Cart showing 3 items but nav badge still showing 4](cart_badge_stale_state.png)
 
 *Above: The shopping cart page correctly shows 3 items after one was removed, but the "Cart" badge in the top navigation still shows the old count — a Redux state sync bug where the badge counter is not derived from the actual items array.*
 
@@ -281,11 +281,11 @@ I added 4 items to the cart and then removed one. The cart count badge in the to
 
 The wallet page displays raw HTML tags visible in the UI — content that should be rendered as formatted text is instead showing as literal markup. Additionally, the "Recent Transactions" section sits to the right of the main wallet balance area as a two-column layout when it should stack below. The preset top-up amount chips show ₹100 / ₹200 / ₹500 / ₹1000 — skipping ₹2000 and ₹5000.
 
-![Wallet page showing raw HTML and layout issues](screenshots/wallet_page_html_rendering.png)
+![Wallet page showing raw HTML and layout issues](wallet_page_html_rendering.png)
 
 *Above: The wallet page with three issues visible — raw HTML tags rendered as literal text on-screen, the "Recent Transactions" panel floating to the right creating a stretched two-column layout, and the top-up presets missing ₹2000 and ₹5000 denomination chips.*
 
-![Product page with unrendered HTML in description](screenshots/product_page_html_unrendered.png)
+![Product page with unrendered HTML in description](product_page_html_unrendered.png)
 
 *Above: A product/gift card page on Subspace showing raw HTML markup visible in the description body — bold tags, list tags, and anchor tags all rendered as literal text instead of formatted content.*
 
